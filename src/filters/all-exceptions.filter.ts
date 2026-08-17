@@ -153,10 +153,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
   /**
    * 将 class-validator 的 ValidationError[] 扁平化为字段名到错误消息列表的映射
    */
-  private flattenValidationErrors(
-    errors: unknown[],
-    prefix = '',
-  ): Record<string, string[]> {
+  private flattenValidationErrors(errors: unknown[], prefix = ''): Record<string, string[]> {
     const result: Record<string, string[]> = {};
 
     for (const err of errors) {

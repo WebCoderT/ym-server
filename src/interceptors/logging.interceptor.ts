@@ -12,13 +12,7 @@
  *
  * 敏感字段（password / token / idCard / phone 等）自动掩码为 ***
  */
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  Logger,
-  NestInterceptor,
-} from '@nestjs/common';
+import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { randomBytes } from 'crypto';
@@ -39,8 +33,14 @@ const C = {
 
 /** 需要掩码的敏感字段关键字（不区分大小写） */
 const SENSITIVE_KEYS = [
-  'password', 'token', 'secret', 'authorization',
-  'idcard', 'phone', 'creditcard', 'cookie',
+  'password',
+  'token',
+  'secret',
+  'authorization',
+  'idcard',
+  'phone',
+  'creditcard',
+  'cookie',
 ];
 
 /** 跳过的路径前缀（静态资源、健康检查、文档） */
@@ -79,7 +79,16 @@ export class LoggingInterceptor implements NestInterceptor {
 
     // ── 请求进入日志 ──
     this.printRequestLine({
-      requestId, timestamp, method, url, query, body, ip, userAgent, userId, accessLevel,
+      requestId,
+      timestamp,
+      method,
+      url,
+      query,
+      body,
+      ip,
+      userAgent,
+      userId,
+      accessLevel,
     });
 
     return next.handle().pipe(
@@ -91,9 +100,7 @@ export class LoggingInterceptor implements NestInterceptor {
         },
         error: (err: unknown) => {
           const statusCode =
-            err instanceof Error && 'status' in err
-              ? (err as { status: number }).status
-              : 500;
+            err instanceof Error && 'status' in err ? (err as { status: number }).status : 500;
           const duration = Date.now() - startTime;
           const message = err instanceof Error ? err.message : String(err);
           this.printErrorLine({ requestId, method, url, statusCode, duration, message });
@@ -117,9 +124,8 @@ export class LoggingInterceptor implements NestInterceptor {
     userId: string | number;
     accessLevel: string;
   }): void {
-    const {
-      requestId, timestamp, method, url, query, body, ip, userAgent, userId, accessLevel,
-    } = params;
+    const { requestId, timestamp, method, url, query, body, ip, userAgent, userId, accessLevel } =
+      params;
 
     const lines: string[] = [];
 
@@ -142,9 +148,7 @@ export class LoggingInterceptor implements NestInterceptor {
 
     // 查询参数
     if (Object.keys(query).length > 0) {
-      lines.push(
-        `${C.gray}│${C.reset} ${C.dim}Query${C.reset} ${this.safeStringify(query)}`,
-      );
+      lines.push(`${C.gray}│${C.reset} ${C.dim}Query${C.reset} ${this.safeStringify(query)}`);
     }
 
     // 请求体（敏感字段掩码）
@@ -178,9 +182,10 @@ export class LoggingInterceptor implements NestInterceptor {
     if (data !== undefined && data !== null) {
       if (typeof data === 'object') {
         const keys = Object.keys(data as object);
-        summary = keys.length > 0
-          ? `{${keys.slice(0, 3).join(', ')}${keys.length > 3 ? ', …' : ''}}`
-          : '{}';
+        summary =
+          keys.length > 0
+            ? `{${keys.slice(0, 3).join(', ')}${keys.length > 3 ? ', …' : ''}}`
+            : '{}';
       } else {
         const str = String(data);
         summary = str.length > 60 ? `${str.substring(0, 60)}…` : str;

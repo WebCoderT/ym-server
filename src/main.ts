@@ -25,8 +25,6 @@ import { configureApplication } from './configure-app';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 // 全局日志拦截器，统一记录请求进入和响应返回
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
-// 预同步数据迁移：活动状态枚举迁移（需在 TypeORM synchronize 之前执行）
-import { migrateEventStatus } from './migrations/event-status.migration';
 
 /**
  * 启动 NestJS 应用的异步引导函数
@@ -43,19 +41,6 @@ import { migrateEventStatus } from './migrations/event-status.migration';
  * - 若未启用 HTTPS，则回退到普通 HTTP 服务
  */
 async function bootstrap() {
-  // ── 预同步数据迁移 ──
-  // 在 TypeORM synchronize 修改表结构之前，先迁移不兼容的旧枚举值，
-  // 避免 "Data truncated for column" 导致启动失败
-  try {
-    const migrated = await migrateEventStatus();
-    if (migrated > 0) {
-      console.log(`[migration] 已将 ${migrated} 条活动的旧状态(upcoming/ongoing)迁移为 selling`);
-    }
-  } catch (err: any) {
-    // 迁移失败不阻塞启动（例如开发环境无数据库时），仅打印警告
-    console.warn(`[migration] 活动状态预迁移跳过：${err}`);
-  }
-
   // 根据环境变量判断是否启用 HTTPS
   const httpsEnable = process.env.HTTPS_ENABLE === 'true';
   let app: NestExpressApplication;
