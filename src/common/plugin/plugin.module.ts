@@ -7,6 +7,9 @@
  * 通过 global: true 标记为全局模块，使插件导出的 Service 在整个应用中可注入，
  * 无需在各业务模块中显式 import 插件模块。
  *
+ * 插件加载通过 ts-node 编译服务处理 .ts 文件，
+ * 避免 Node.js 22 原生 TypeScript 加载器不支持装饰器等语法的问题。
+ *
  * @module plugin.module
  */
 

@@ -9,9 +9,14 @@
  * - 通过 CapabilityRegistry 注册 "security:devices" 查询能力
  * - 不引用任何核心模块或其他插件
  *
+ * 注意：此模块不使用构造器参数属性（private readonly xxx），
+ * 因为 PluginScanner 通过 await import() 加载插件时，
+ * Node.js 22 的原生 TypeScript strip 模式不支持参数属性语法。
+ * 能力注册改为通过 provider factory 实现，避免实例级 DI。
+ *
  * 通过 plugin.json 声明插件元数据，由 PluginModule 自动扫描并加载。
  */
-import { DynamicModule, Global, Module, OnModuleInit } from '@nestjs/common';
+import { DynamicModule, Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserLoginDeviceEntity } from './entities/user-login-device.entity';
 import { SecurityAuditLogEntity } from './entities/security-audit-log.entity';
@@ -25,32 +30,20 @@ import { CapabilityRegistry } from '../../common/plugin/capability.registry';
  *
  * 提供设备管理、安全审计日志等安全功能。
  * 通过事件总线与能力注册与核心模块通信，完全不依赖其他模块。
+ *
+ * 能力注册通过 SECURITY_CAPABILITY_INITIALIZER provider 实现：
+ * 该 provider 在应用启动时注入 CapabilityRegistry 和 SecurityService，
+ * 将 "security:devices" 查询能力注册到全局注册中心。
  */
 @Global()
 @Module({})
-export class SecurityModule implements OnModuleInit {
-  constructor(
-    private readonly capabilityRegistry: CapabilityRegistry,
-    private readonly securityService: SecurityService,
-  ) {}
-
-  /**
-   * 模块初始化时注册查询能力
-   *
-   * 注册 "security:devices" 能力，供核心模块通过 CapabilityRegistry.invoke() 查询用户设备列表。
-   * 当插件卸载时，该能力未注册，invoke() 返回 null，核心模块自动降级。
-   */
-  onModuleInit(): void {
-    this.capabilityRegistry.register(
-      'security:devices',
-      (input: { userId: string }) => this.securityService.getDeviceList(input.userId),
-    );
-  }
-
+export class SecurityModule {
   /**
    * 注册安全模块
    *
    * 注册实体、服务、控制器与事件监听器。
+   * 通过 SECURITY_CAPABILITY_INITIALIZER provider 工厂函数，
+   * 在应用启动时将 "security:devices" 能力注册到 CapabilityRegistry。
    *
    * @returns 配置完成的 DynamicModule
    */
@@ -65,6 +58,19 @@ export class SecurityModule implements OnModuleInit {
       providers: [
         SecurityService,
         SecurityEventListener,
+        // 能力初始化器：在应用启动时注册 "security:devices" 查询能力
+        // 使用工厂函数注入依赖，避免模块类使用参数属性语法
+        {
+          provide: 'SECURITY_CAPABILITY_INITIALIZER',
+          inject: [CapabilityRegistry, SecurityService],
+          useFactory: (registry: CapabilityRegistry, service: SecurityService) => {
+            registry.register(
+              'security:devices',
+              (input: { userId: string }) => service.getDeviceList(input.userId),
+            );
+            return true;
+          },
+        },
       ],
       exports: [SecurityService],
     };
