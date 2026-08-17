@@ -22,27 +22,25 @@ import { registerAs } from '@nestjs/config';
 export const ossConfig = registerAs('oss', () => ({
   // OSS 地域节点：优先读取环境变量 OSS_REGION，未设置时为空字符串
   // 示例值：oss-cn-hangzhou、oss-cn-beijing
-  region: process.env.OSS_REGION ?? '',
+  region: process.env.OSS_REGION,
 
   // OSS 存储空间名称：优先读取环境变量 OSS_BUCKET，未设置时为空字符串
   // 该名称在阿里云控制台创建 Bucket 时指定，需全局唯一
-  bucket: process.env.OSS_BUCKET ?? '',
+  bucket: process.env.OSS_BUCKET,
 
   // 阿里云 AccessKey ID：优先读取环境变量 OSS_ACCESS_KEY_ID，未设置时为空字符串
   // 用于标识调用者身份，可在阿里云 RAM 控制台创建和管理
-  accessKeyId: process.env.OSS_ACCESS_KEY_ID ?? '',
+  accessKeyId: process.env.OSS_ACCESS_KEY_ID,
 
   // 阿里云 AccessKey Secret：优先读取环境变量 OSS_ACCESS_KEY_SECRET，未设置时为空字符串
   // 与 AccessKey ID 配对使用，用于请求签名验证，需妥善保管避免泄露
-  accessKeySecret: process.env.OSS_ACCESS_KEY_SECRET ?? '',
+  accessKeySecret: process.env.OSS_ACCESS_KEY_SECRET,
 
   // OSS 外网 Endpoint：优先读取环境变量 OSS_ENDPOINT，未设置时根据 region 拼接
   // 示例值：https://oss-cn-hangzhou.aliyuncs.com
-  endpoint:
-    process.env.OSS_ENDPOINT ??
-    `https://${process.env.OSS_REGION ?? ''}.aliyuncs.com`,
+  endpoint: process.env.OSS_ENDPOINT ?? `https://${process.env.OSS_REGION ?? ''}.aliyuncs.com`,
 
   // CDN 加速域名（可选）：优先读取环境变量 OSS_CDN_DOMAIN，用于返回对外访问的文件 URL
   // 示例值：https://cdn.example.com
-  cdnDomain: process.env.OSS_CDN_DOMAIN ?? '',
+  cdnDomain: process.env.OSS_CDN_DOMAIN,
 }));
