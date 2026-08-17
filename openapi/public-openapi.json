@@ -1,0 +1,4812 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/public/health": {
+      "get": {
+        "operationId": "PublicController_getHealth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns the service health status."
+          }
+        },
+        "summary": "Public health check endpoint",
+        "tags": [
+          "public"
+        ]
+      }
+    },
+    "/public/events/{eventId}/refund-policy-summary": {
+      "get": {
+        "operationId": "PublicRefundController_getRefundPolicySummary",
+        "parameters": [
+          {
+            "name": "eventId",
+            "required": true,
+            "in": "path",
+            "description": "Event identifier",
+            "schema": {
+              "example": "7001001",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicRefundPolicySummaryResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Read the public refund policy summary for an event",
+        "tags": [
+          "public-refund"
+        ]
+      }
+    },
+    "/public/auth/login": {
+      "post": {
+        "operationId": "PublicAuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSessionVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Wechat one-click login for client users",
+        "tags": [
+          "public-auth"
+        ]
+      }
+    },
+    "/public/auth/refresh": {
+      "post": {
+        "operationId": "PublicAuthController_refresh",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSessionVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Refresh client access token by refresh token",
+        "tags": [
+          "public-auth"
+        ]
+      }
+    },
+    "/public/auth/register": {
+      "post": {
+        "operationId": "PublicAuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSessionVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Register new account with phone and password",
+        "tags": [
+          "public-auth"
+        ]
+      }
+    },
+    "/public/auth/login-phone": {
+      "post": {
+        "operationId": "PublicAuthController_loginPhone",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhoneLoginRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSessionVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Login with phone and password",
+        "tags": [
+          "public-auth"
+        ]
+      }
+    },
+    "/public/auth/send-code": {
+      "post": {
+        "operationId": "PublicAuthController_sendCode",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendCodeRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "验证码发送结果"
+          }
+        },
+        "summary": "发送短信验证码",
+        "tags": [
+          "public-auth"
+        ]
+      }
+    },
+    "/public/auth/login-code": {
+      "post": {
+        "operationId": "PublicAuthController_loginCode",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CodeLoginRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSessionVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "验证码登录",
+        "tags": [
+          "public-auth"
+        ]
+      }
+    },
+    "/public/system-config": {
+      "get": {
+        "operationId": "PublicSystemConfigController_getConfig",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemConfigVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "获取系统基础配置",
+        "tags": [
+          "系统配置"
+        ]
+      }
+    },
+    "/public/system-config/quick-navs": {
+      "get": {
+        "operationId": "PublicSystemConfigController_getQuickNavs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuickNavItemVo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "获取快捷导航列表",
+        "tags": [
+          "系统配置"
+        ]
+      }
+    },
+    "/public/regions": {
+      "get": {
+        "operationId": "PublicRegionController_getRegionTree",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns tree of active regions (province -> city -> district)"
+          }
+        },
+        "summary": "Get active region tree",
+        "tags": [
+          "public-region"
+        ]
+      }
+    },
+    "/client/banners": {
+      "get": {
+        "operationId": "PublicBannerController_getBanners",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientBannerListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List active banners",
+        "tags": [
+          "public-banner"
+        ]
+      }
+    },
+    "/client/events": {
+      "get": {
+        "operationId": "PublicEventController_getEvents",
+        "parameters": [
+          {
+            "name": "starId",
+            "required": false,
+            "in": "query",
+            "description": "按明星ID筛选",
+            "schema": {
+              "example": "1",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List upcoming events",
+        "tags": [
+          "public-event"
+        ]
+      }
+    },
+    "/client/events/{eventId}": {
+      "get": {
+        "operationId": "PublicEventController_getEventDetail",
+        "parameters": [
+          {
+            "name": "eventId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDetailVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get event detail with ticket tiers",
+        "tags": [
+          "public-event"
+        ]
+      }
+    },
+    "/client/goods": {
+      "get": {
+        "operationId": "PublicGoodsController_getGoodsList",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "当前页码，从 1 开始",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页条数",
+            "schema": {
+              "example": 5,
+              "type": "number"
+            }
+          },
+          {
+            "name": "categoryId",
+            "required": false,
+            "in": "query",
+            "description": "按分类ID筛选",
+            "schema": {
+              "example": "1",
+              "type": "string"
+            }
+          },
+          {
+            "name": "keyword",
+            "required": false,
+            "in": "query",
+            "description": "搜索关键词，按商品标题模糊匹配",
+            "schema": {
+              "example": "T恤",
+              "type": "string"
+            }
+          },
+          {
+            "name": "starId",
+            "required": false,
+            "in": "query",
+            "description": "按关联明星ID筛选",
+            "schema": {
+              "example": "1",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoodsListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List on-sale goods",
+        "tags": [
+          "public-goods"
+        ]
+      }
+    },
+    "/client/goods/{goodsId}": {
+      "get": {
+        "operationId": "PublicGoodsController_getGoodsDetail",
+        "parameters": [
+          {
+            "name": "goodsId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoodsDetailVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get goods detail",
+        "tags": [
+          "public-goods"
+        ]
+      }
+    },
+    "/client/goods-categories": {
+      "get": {
+        "operationId": "PublicGoodsCategoryController_listCategories",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoodsCategoryVo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List all goods categories",
+        "tags": [
+          "public-goods-categories"
+        ]
+      }
+    },
+    "/client/goods/{goodsId}/reviews": {
+      "get": {
+        "operationId": "PublicReviewController_getGoodsReviews",
+        "parameters": [
+          {
+            "name": "goodsId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "当前页码，从 1 开始",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页条数",
+            "schema": {
+              "example": 5,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List goods reviews",
+        "tags": [
+          "public-reviews"
+        ]
+      }
+    },
+    "/client/stars": {
+      "get": {
+        "operationId": "PublicStarController_getStars",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "当前页码，从 1 开始",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页条数",
+            "schema": {
+              "example": 5,
+              "type": "number"
+            }
+          },
+          {
+            "name": "keyword",
+            "required": false,
+            "in": "query",
+            "description": "搜索关键词，按明星名称模糊匹配",
+            "schema": {
+              "example": "五月天",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StarListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List stars",
+        "tags": [
+          "public-star"
+        ]
+      }
+    },
+    "/client/stars/with-events": {
+      "get": {
+        "operationId": "PublicStarController_getStarsWithEvents",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "当前页码，从 1 开始",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页条数",
+            "schema": {
+              "example": 5,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StarWithEventListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List stars with their latest upcoming event",
+        "tags": [
+          "public-star"
+        ]
+      }
+    },
+    "/client/stars/{starId}": {
+      "get": {
+        "operationId": "PublicStarController_getStarDetail",
+        "parameters": [
+          {
+            "name": "starId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StarDetailVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get star detail",
+        "tags": [
+          "public-star"
+        ]
+      }
+    },
+    "/client/cards/pools": {
+      "get": {
+        "operationId": "PublicCardController_getCardPools",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardPoolListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List active card pools",
+        "tags": [
+          "public-card"
+        ]
+      }
+    },
+    "/client/cards/pools/by-star": {
+      "get": {
+        "operationId": "PublicCardController_getCardPoolsByStar",
+        "parameters": [
+          {
+            "name": "starId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardPoolListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List active card pools by star",
+        "tags": [
+          "public-card"
+        ]
+      }
+    },
+    "/client/cards/pools/by-category": {
+      "get": {
+        "operationId": "PublicCardController_getCardPoolsByCategory",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardPoolListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List active card pools by category",
+        "tags": [
+          "public-card"
+        ]
+      }
+    },
+    "/client/cards/pool-categories": {
+      "get": {
+        "operationId": "PublicCardController_getPoolCategories",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardPoolCategoryListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List card pool categories",
+        "tags": [
+          "public-card"
+        ]
+      }
+    },
+    "/client/cards/pools/{poolId}": {
+      "get": {
+        "operationId": "PublicCardController_getCardPoolDetail",
+        "parameters": [
+          {
+            "name": "poolId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardPoolDetailResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get card pool detail",
+        "tags": [
+          "public-card"
+        ]
+      }
+    },
+    "/client/cards/draw-records/latest": {
+      "get": {
+        "operationId": "PublicCardController_getLatestDrawRecords",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DrawRecordMarqueeResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get latest draw records for marquee",
+        "tags": [
+          "public-card"
+        ]
+      }
+    },
+    "/client/rewards/stars/{starId}": {
+      "get": {
+        "operationId": "PublicRewardController_getStarRewards",
+        "parameters": [
+          {
+            "name": "starId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get reward list for a star",
+        "tags": [
+          "public-reward"
+        ]
+      }
+    },
+    "/client/rewards/stars/{starId}/rank": {
+      "get": {
+        "operationId": "PublicRewardController_getRewardRank",
+        "parameters": [
+          {
+            "name": "starId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardRankResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get reward rank for a star",
+        "tags": [
+          "public-reward"
+        ]
+      }
+    },
+    "/client/fan-clubs": {
+      "get": {
+        "operationId": "PublicFanClubController_getFanClubs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FanClubListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List fan clubs",
+        "tags": [
+          "public-fan-club"
+        ]
+      }
+    },
+    "/client/search": {
+      "get": {
+        "operationId": "PublicSearchController_search",
+        "parameters": [
+          {
+            "name": "keyword",
+            "required": false,
+            "in": "query",
+            "description": "搜索关键词",
+            "schema": {
+              "example": "五月天",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Global search across stars, events and card pools",
+        "tags": [
+          "public-search"
+        ]
+      }
+    },
+    "/client/search/hot": {
+      "get": {
+        "operationId": "PublicSearchController_getHotSearch",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HotSearchResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get hot search keywords",
+        "tags": [
+          "public-search"
+        ]
+      }
+    },
+    "/public/payment-methods": {
+      "get": {
+        "operationId": "PublicPaymentMethodController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethodListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "获取可用支付方式列表（公开）",
+        "tags": [
+          "public-payment-method"
+        ]
+      }
+    },
+    "/public/wechat-pay/notify": {
+      "post": {
+        "operationId": "PublicWechatPayController_handlePayNotify",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "微信支付回调通知（无需鉴权）",
+        "tags": [
+          "public-wechat-pay"
+        ]
+      }
+    },
+    "/public/gifts": {
+      "get": {
+        "operationId": "PublicGiftController_list",
+        "parameters": [
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GiftListVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List all available gifts",
+        "tags": [
+          "public-gift"
+        ]
+      }
+    },
+    "/rules": {
+      "get": {
+        "operationId": "PublicRuleController_listRules",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RuleListResponseVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List all rules",
+        "tags": [
+          "public-rule"
+        ]
+      }
+    },
+    "/rules/{code}": {
+      "get": {
+        "operationId": "PublicRuleController_getRuleByCode",
+        "parameters": [
+          {
+            "name": "code",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RuleVo"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get rule by code",
+        "tags": [
+          "public-rule"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Public API",
+    "description": "Public operations and schemas.",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "RefundPolicyTierVo": {
+        "type": "object",
+        "properties": {
+          "stageName": {
+            "type": "string",
+            "example": "T-72h 及以上"
+          },
+          "hoursBeforeStart": {
+            "type": "number",
+            "example": 72
+          },
+          "refundRatio": {
+            "type": "number",
+            "example": 100
+          },
+          "allowApply": {
+            "type": "boolean",
+            "example": true
+          },
+          "description": {
+            "type": "string",
+            "example": "活动开始前 72 小时以上申请，支持全额退款。"
+          }
+        },
+        "required": [
+          "stageName",
+          "hoursBeforeStart",
+          "refundRatio",
+          "allowApply",
+          "description"
+        ]
+      },
+      "PublicRefundPolicySummaryResponseVo": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "public"
+          },
+          "eventId": {
+            "type": "number",
+            "example": 7001001
+          },
+          "policyName": {
+            "type": "string",
+            "example": "广州见面会退票规则 V3"
+          },
+          "tiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RefundPolicyTierVo"
+            }
+          }
+        },
+        "required": [
+          "audience",
+          "eventId",
+          "policyName",
+          "tiers"
+        ]
+      },
+      "LoginRequestDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "wechat-login-code"
+          },
+          "nickname": {
+            "type": "string",
+            "example": "星愿旅人"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/avatar.png"
+          },
+          "deviceId": {
+            "type": "string",
+            "example": "device-iphone-15"
+          },
+          "deviceName": {
+            "type": "string",
+            "example": "iPhone 15 Pro"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
+      "MemberPrivilegesDto": {
+        "type": "object",
+        "properties": {
+          "goodsDiscount": {
+            "type": "number",
+            "example": 0.95,
+            "description": "商品折扣比例，null 表示不启用",
+            "nullable": true
+          },
+          "earlyTicket": {
+            "type": "boolean",
+            "example": true
+          },
+          "fastRefund": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "earlyTicket",
+          "fastRefund"
+        ]
+      },
+      "AvatarFrameCateorySummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "ClientAvatarFrameSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "cateory": {
+            "$ref": "#/components/schemas/AvatarFrameCateorySummary"
+          },
+          "source": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "frameRatio": {
+            "type": "number"
+          },
+          "owned": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "url",
+          "cateory",
+          "source",
+          "description",
+          "frameRatio",
+          "owned"
+        ]
+      },
+      "MedalCateorySummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "ClientMedalSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "cateory": {
+            "$ref": "#/components/schemas/MedalCateorySummary"
+          },
+          "source": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "owned": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "url",
+          "cateory",
+          "source",
+          "description",
+          "owned"
+        ]
+      },
+      "UserMemberLevelDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "白银会员"
+          },
+          "level": {
+            "type": "number",
+            "example": 1
+          },
+          "totalSpending": {
+            "type": "number",
+            "example": 150
+          },
+          "icon": {
+            "type": "string",
+            "example": "https://example.com/icon.png",
+            "nullable": true
+          },
+          "privileges": {
+            "$ref": "#/components/schemas/MemberPrivilegesDto"
+          },
+          "avatarFrame": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientAvatarFrameSummary"
+              }
+            ]
+          },
+          "medal": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientMedalSummary"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "level",
+          "totalSpending",
+          "icon",
+          "privileges",
+          "avatarFrame",
+          "medal"
+        ]
+      },
+      "UserDeviceVo": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "example": "device-iphone-15"
+          },
+          "deviceName": {
+            "type": "string",
+            "example": "iPhone 15 Pro"
+          },
+          "current": {
+            "type": "boolean",
+            "example": true
+          },
+          "lastLoginAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "deviceId",
+          "deviceName",
+          "current",
+          "lastLoginAt"
+        ]
+      },
+      "UserSecurityVo": {
+        "type": "object",
+        "properties": {
+          "hasRiskReminder": {
+            "type": "boolean",
+            "example": false
+          },
+          "riskMessage": {
+            "type": "string",
+            "example": "当前设备安全，无异常登录提醒。"
+          },
+          "devices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserDeviceVo"
+            }
+          }
+        },
+        "required": [
+          "hasRiskReminder",
+          "riskMessage",
+          "devices"
+        ]
+      },
+      "UserPrivacySettingVo": {
+        "type": "object",
+        "properties": {
+          "profileVisibility": {
+            "type": "number",
+            "enum": [
+              1,
+              2,
+              3
+            ],
+            "example": 1
+          },
+          "phoneVisibility": {
+            "type": "number",
+            "enum": [
+              1,
+              2,
+              3
+            ],
+            "example": 3
+          },
+          "rewardVisibility": {
+            "type": "number",
+            "enum": [
+              1,
+              2,
+              3
+            ],
+            "example": 2
+          },
+          "allowStrangerMessage": {
+            "type": "number",
+            "example": 0
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "profileVisibility",
+          "phoneVisibility",
+          "rewardVisibility",
+          "allowStrangerMessage",
+          "updatedAt"
+        ]
+      },
+      "AvatarFrameSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "cateory": {
+            "$ref": "#/components/schemas/AvatarFrameCateorySummary"
+          },
+          "source": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "frameRatio": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "url",
+          "cateory",
+          "source",
+          "description",
+          "frameRatio"
+        ]
+      },
+      "MedalSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "cateory": {
+            "$ref": "#/components/schemas/MedalCateorySummary"
+          },
+          "source": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "url",
+          "cateory",
+          "source",
+          "description"
+        ]
+      },
+      "UserInfoVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "openid": {
+            "type": "string",
+            "example": "wx_8d3b1ec2a1a2"
+          },
+          "nickname": {
+            "type": "string",
+            "example": "星愿旅人"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/avatar/default.png"
+          },
+          "phone": {
+            "type": "string",
+            "example": "138****8888",
+            "nullable": true
+          },
+          "qqOpenId": {
+            "type": "string",
+            "example": "12****89"
+          },
+          "email": {
+            "type": "string",
+            "example": "ab***@example.com"
+          },
+          "balance": {
+            "type": "number",
+            "example": 0
+          },
+          "totalSpending": {
+            "type": "number",
+            "example": 0
+          },
+          "status": {
+            "type": "number",
+            "example": 1
+          },
+          "roleCode": {
+            "type": "string",
+            "example": "USER_MANAGER"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          },
+          "isRealNameAuth": {
+            "type": "boolean",
+            "example": false
+          },
+          "memberLevel": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserMemberLevelDto"
+              }
+            ]
+          },
+          "growthValue": {
+            "type": "number",
+            "example": 0
+          },
+          "fanClubCount": {
+            "type": "number",
+            "example": 0
+          },
+          "lastLoginAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          },
+          "security": {
+            "$ref": "#/components/schemas/UserSecurityVo"
+          },
+          "followCount": {
+            "type": "number",
+            "example": 12
+          },
+          "ticketCount": {
+            "type": "number",
+            "example": 3
+          },
+          "cardCount": {
+            "type": "number",
+            "example": 28
+          },
+          "privacySetting": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserPrivacySettingVo"
+              }
+            ]
+          },
+          "avatarFrame": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AvatarFrameSummary"
+              }
+            ]
+          },
+          "wornMedals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MedalSummary"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "openid",
+          "nickname",
+          "avatarUrl",
+          "phone",
+          "balance",
+          "totalSpending",
+          "status",
+          "createdAt",
+          "isRealNameAuth",
+          "memberLevel",
+          "growthValue",
+          "fanClubCount",
+          "lastLoginAt",
+          "security",
+          "followCount",
+          "ticketCount",
+          "cardCount",
+          "privacySetting",
+          "avatarFrame",
+          "wornMedals"
+        ]
+      },
+      "AuthSessionVo": {
+        "type": "object",
+        "properties": {
+          "tokenType": {
+            "type": "string",
+            "example": "Bearer"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "accessTokenExpiresIn": {
+            "type": "number",
+            "example": 7200
+          },
+          "refreshTokenExpiresIn": {
+            "type": "number",
+            "example": 604800
+          },
+          "sessionId": {
+            "type": "string",
+            "example": "session_550e8400-e29b-41d4-a716-446655440000"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserInfoVo"
+          },
+          "requireRealNameAuth": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "tokenType",
+          "accessToken",
+          "refreshToken",
+          "accessTokenExpiresIn",
+          "refreshTokenExpiresIn",
+          "sessionId",
+          "user",
+          "requireRealNameAuth"
+        ]
+      },
+      "RefreshTokenRequestDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ]
+      },
+      "RegisterRequestDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "13800138000"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123"
+          },
+          "nickname": {
+            "type": "string",
+            "example": "星愿旅人"
+          },
+          "deviceId": {
+            "type": "string",
+            "example": "device-iphone-15"
+          },
+          "deviceName": {
+            "type": "string",
+            "example": "iPhone 15 Pro"
+          }
+        },
+        "required": [
+          "phone",
+          "password"
+        ]
+      },
+      "PhoneLoginRequestDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "13800138000"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123"
+          },
+          "deviceId": {
+            "type": "string",
+            "example": "device-iphone-15"
+          },
+          "deviceName": {
+            "type": "string",
+            "example": "iPhone 15 Pro"
+          }
+        },
+        "required": [
+          "phone",
+          "password"
+        ]
+      },
+      "SendCodeRequestDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "13800138000"
+          }
+        },
+        "required": [
+          "phone"
+        ]
+      },
+      "CodeLoginRequestDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "13800138000"
+          },
+          "code": {
+            "type": "string",
+            "example": "123456"
+          },
+          "deviceId": {
+            "type": "string",
+            "example": "device-iphone-15"
+          },
+          "deviceName": {
+            "type": "string",
+            "example": "iPhone 15 Pro"
+          }
+        },
+        "required": [
+          "phone",
+          "code"
+        ]
+      },
+      "FontConfigValueVo": {
+        "type": "object",
+        "properties": {
+          "fontFamily": {
+            "type": "string",
+            "description": "CSS font-family 名称"
+          },
+          "fontUrl": {
+            "type": "string",
+            "description": "字体文件 URL（完整地址）"
+          }
+        }
+      },
+      "SystemConfigVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "配置 ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "系统名称"
+          },
+          "logo": {
+            "type": "string",
+            "description": "系统 Logo URL"
+          },
+          "mpLogo": {
+            "type": "string",
+            "description": "小程序 Logo URL"
+          },
+          "emptyStateImage": {
+            "type": "string",
+            "description": "全局空状态图标 URL"
+          },
+          "starAvatarSelectedBg": {
+            "type": "string",
+            "description": "明星头像选中背景图 URL"
+          },
+          "description": {
+            "type": "string",
+            "description": "系统描述"
+          },
+          "contactPhone": {
+            "type": "string",
+            "description": "联系电话"
+          },
+          "contactEmail": {
+            "type": "string",
+            "description": "联系邮箱"
+          },
+          "loginMode": {
+            "type": "string",
+            "description": "登录方式配置：逗号分隔，如 wx,code,phone"
+          },
+          "cdnBaseUrl": {
+            "type": "string",
+            "description": "CDN 基础地址"
+          },
+          "requireRealNameAuth": {
+            "type": "boolean",
+            "description": "是否强制实名认证",
+            "example": false
+          },
+          "globalUniqueAudience": {
+            "type": "boolean",
+            "description": "全局唯一观演人",
+            "example": false
+          },
+          "amapKey": {
+            "type": "string",
+            "description": "高德地图 API Key（用于管理端地图选点）"
+          },
+          "amapSecurityCode": {
+            "type": "string",
+            "description": "高德地图安全密钥（AMap JS API 2.0 必填）"
+          },
+          "pageBackgrounds": {
+            "type": "object",
+            "description": "客户端页面背景配置",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "description": "背景图片 URL（相对路径）"
+                },
+                "code": {
+                  "type": "string",
+                  "description": "CSS background 代码"
+                }
+              }
+            }
+          },
+          "fontConfig": {
+            "description": "客户端字体配置",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FontConfigValueVo"
+              }
+            ]
+          },
+          "registrationAgreement": {
+            "type": "string",
+            "description": "注册协议内容（纯文本）",
+            "default": ""
+          },
+          "privacyPolicy": {
+            "type": "string",
+            "description": "隐私政策内容（纯文本）",
+            "default": ""
+          },
+          "realNameAuthAgreement": {
+            "type": "string",
+            "description": "实名认证服务协议内容（纯文本）",
+            "default": ""
+          },
+          "defaultNickname": {
+            "type": "string",
+            "description": "用户默认昵称前缀",
+            "default": "粉丝"
+          },
+          "defaultAvatar": {
+            "type": "string",
+            "description": "用户默认头像 URL",
+            "default": ""
+          },
+          "kuaidi100Customer": {
+            "type": "string",
+            "description": "快递100 Customer（API 授权标识）",
+            "default": ""
+          },
+          "kuaidi100Key": {
+            "type": "string",
+            "description": "快递100 Key（API 密钥）",
+            "default": ""
+          },
+          "defaultShippingFee": {
+            "type": "number",
+            "description": "默认邮费（非偏远地区）",
+            "default": 0
+          },
+          "remoteShippingFee": {
+            "type": "number",
+            "description": "偏远地区邮费",
+            "default": 0
+          },
+          "freeShippingAmount": {
+            "type": "number",
+            "description": "包邮金额（订单金额达到此值免邮）",
+            "default": 0
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "logo",
+          "mpLogo",
+          "emptyStateImage",
+          "starAvatarSelectedBg",
+          "description",
+          "contactPhone",
+          "contactEmail",
+          "loginMode",
+          "cdnBaseUrl",
+          "requireRealNameAuth",
+          "globalUniqueAudience",
+          "amapKey",
+          "amapSecurityCode",
+          "pageBackgrounds",
+          "registrationAgreement",
+          "privacyPolicy",
+          "realNameAuthAgreement",
+          "defaultNickname",
+          "defaultAvatar",
+          "kuaidi100Customer",
+          "kuaidi100Key",
+          "defaultShippingFee",
+          "remoteShippingFee",
+          "freeShippingAmount"
+        ]
+      },
+      "QuickNavItemVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "导航项 ID"
+          },
+          "icon": {
+            "type": "string",
+            "description": "图标 URL"
+          },
+          "label": {
+            "type": "string",
+            "description": "显示文字"
+          },
+          "url": {
+            "type": "string",
+            "description": "跳转地址"
+          },
+          "openType": {
+            "type": "string",
+            "description": "跳转方式"
+          },
+          "sort": {
+            "type": "number",
+            "description": "排序号"
+          }
+        },
+        "required": [
+          "id",
+          "icon",
+          "label",
+          "url",
+          "openType",
+          "sort"
+        ]
+      },
+      "BannerSummaryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "title": {
+            "type": "string",
+            "example": "林星语新专辑首发"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://cdn.example.com/banner/001.jpg"
+          },
+          "linkType": {
+            "example": "star",
+            "$ref": "#/components/schemas/BannerLinkType"
+          },
+          "linkTarget": {
+            "type": "string",
+            "example": "star_001"
+          },
+          "description": {
+            "type": "string",
+            "example": "林星语全新专辑震撼首发，快来参与打榜活动",
+            "nullable": true
+          },
+          "tags": {
+            "example": [
+              "热门",
+              "首发"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "startTime": {
+            "type": "string",
+            "example": "2024-06-15"
+          },
+          "endTime": {
+            "type": "string",
+            "example": "2024-07-15"
+          },
+          "status": {
+            "example": "active",
+            "$ref": "#/components/schemas/BannerStatus"
+          },
+          "priority": {
+            "type": "number",
+            "example": 1
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2024-06-01T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "image",
+          "linkType",
+          "linkTarget",
+          "description",
+          "tags",
+          "startTime",
+          "endTime",
+          "status",
+          "priority",
+          "createdAt"
+        ]
+      },
+      "ClientBannerListResponseVo": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BannerSummaryVo"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "StarBriefVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "name": {
+            "type": "string",
+            "example": "五月天"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/star/avatar.png"
+          },
+          "backgroundUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/star/bg.png",
+            "nullable": true
+          },
+          "tags": {
+            "example": [
+              "摇滚",
+              "乐队"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "followerCount": {
+            "type": "number",
+            "example": 1280000
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "avatarUrl",
+          "backgroundUrl",
+          "tags",
+          "followerCount"
+        ]
+      },
+      "EventSummaryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "7001001"
+          },
+          "title": {
+            "type": "string",
+            "example": "五月天广州见面会"
+          },
+          "coverUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/event/cover.png"
+          },
+          "horizontalPosterUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/event/poster.png",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "example": "广州"
+          },
+          "address": {
+            "type": "string",
+            "example": "天河区天河路299号天河体育中心体育馆"
+          },
+          "latitude": {
+            "type": "number",
+            "example": 23.137017,
+            "description": "纬度"
+          },
+          "longitude": {
+            "type": "number",
+            "example": 113.334453,
+            "description": "经度"
+          },
+          "startTime": {
+            "type": "string",
+            "example": "2026-06-15T19:00:00.000Z"
+          },
+          "endTime": {
+            "type": "string",
+            "example": "2026-06-15T22:00:00.000Z"
+          },
+          "status": {
+            "example": "selling",
+            "$ref": "#/components/schemas/EventStatus"
+          },
+          "starIds": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stars": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StarBriefVo"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          },
+          "maxTicketsPerPerson": {
+            "type": "number",
+            "example": 2
+          },
+          "requireRealName": {
+            "type": "boolean",
+            "example": false
+          },
+          "allowChildren": {
+            "type": "boolean",
+            "example": true
+          },
+          "seatSelectionMode": {
+            "example": "random",
+            "$ref": "#/components/schemas/SeatSelectionMode"
+          },
+          "seatMapUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/event/seat-map.png",
+            "nullable": true
+          },
+          "remainingTickets": {
+            "type": "number",
+            "example": 150
+          },
+          "lowestPrice": {
+            "type": "number",
+            "example": 299,
+            "description": "门票最低价格（折后价）",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "coverUrl",
+          "horizontalPosterUrl",
+          "city",
+          "address",
+          "startTime",
+          "endTime",
+          "status",
+          "starIds",
+          "stars",
+          "createdAt",
+          "maxTicketsPerPerson",
+          "requireRealName",
+          "allowChildren",
+          "seatSelectionMode",
+          "seatMapUrl",
+          "remainingTickets"
+        ]
+      },
+      "EventListResponseVo": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventSummaryVo"
+            }
+          }
+        },
+        "required": [
+          "audience",
+          "items"
+        ]
+      },
+      "TicketTierVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1001"
+          },
+          "tierName": {
+            "type": "string",
+            "example": "VIP 区"
+          },
+          "price": {
+            "type": "number",
+            "example": 599
+          },
+          "stock": {
+            "type": "number",
+            "example": 50
+          },
+          "totalQuantity": {
+            "type": "number",
+            "example": 100
+          },
+          "soldCount": {
+            "type": "number",
+            "example": 50
+          },
+          "status": {
+            "example": "on_sale",
+            "$ref": "#/components/schemas/TicketTierStatus"
+          },
+          "seatArea": {
+            "type": "string",
+            "example": "A区前排",
+            "nullable": true
+          },
+          "seatCount": {
+            "type": "number",
+            "example": 100
+          },
+          "seatRange": {
+            "type": "string",
+            "example": "A1-A100",
+            "nullable": true
+          },
+          "discountRate": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "id",
+          "tierName",
+          "price",
+          "stock",
+          "totalQuantity",
+          "soldCount",
+          "status",
+          "seatArea",
+          "seatCount",
+          "seatRange",
+          "discountRate"
+        ]
+      },
+      "EventDetailVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "7001001"
+          },
+          "title": {
+            "type": "string",
+            "example": "五月天广州见面会"
+          },
+          "coverUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/event/cover.png"
+          },
+          "horizontalPosterUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/event/poster.png",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "example": "广州"
+          },
+          "address": {
+            "type": "string",
+            "example": "天河区天河路299号天河体育中心体育馆"
+          },
+          "latitude": {
+            "type": "number",
+            "example": 23.137017,
+            "description": "纬度"
+          },
+          "longitude": {
+            "type": "number",
+            "example": 113.334453,
+            "description": "经度"
+          },
+          "startTime": {
+            "type": "string",
+            "example": "2026-06-15T19:00:00.000Z"
+          },
+          "endTime": {
+            "type": "string",
+            "example": "2026-06-15T22:00:00.000Z"
+          },
+          "status": {
+            "example": "selling",
+            "$ref": "#/components/schemas/EventStatus"
+          },
+          "starIds": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stars": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StarBriefVo"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          },
+          "maxTicketsPerPerson": {
+            "type": "number",
+            "example": 2
+          },
+          "requireRealName": {
+            "type": "boolean",
+            "example": false
+          },
+          "allowChildren": {
+            "type": "boolean",
+            "example": true
+          },
+          "seatSelectionMode": {
+            "example": "random",
+            "$ref": "#/components/schemas/SeatSelectionMode"
+          },
+          "seatMapUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/event/seat-map.png",
+            "nullable": true
+          },
+          "remainingTickets": {
+            "type": "number",
+            "example": 150
+          },
+          "lowestPrice": {
+            "type": "number",
+            "example": 299,
+            "description": "门票最低价格（折后价）",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "example": "活动详细描述...",
+            "nullable": true
+          },
+          "detailImages": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ticketTiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketTierVo"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "coverUrl",
+          "horizontalPosterUrl",
+          "city",
+          "address",
+          "startTime",
+          "endTime",
+          "status",
+          "starIds",
+          "stars",
+          "createdAt",
+          "maxTicketsPerPerson",
+          "requireRealName",
+          "allowChildren",
+          "seatSelectionMode",
+          "seatMapUrl",
+          "remainingTickets",
+          "description",
+          "detailImages",
+          "ticketTiers"
+        ]
+      },
+      "GoodsSummaryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "title": {
+            "type": "string",
+            "example": "五月天限定 T恤"
+          },
+          "coverUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/goods/cover.png"
+          },
+          "price": {
+            "type": "number",
+            "example": 199
+          },
+          "stock": {
+            "type": "number",
+            "example": 100
+          },
+          "soldCount": {
+            "type": "number",
+            "example": 50
+          },
+          "showSoldCount": {
+            "type": "boolean",
+            "example": true,
+            "description": "是否显示销量"
+          },
+          "isFreeShipping": {
+            "type": "boolean",
+            "example": false,
+            "description": "是否包邮"
+          },
+          "isRemoteFreeShipping": {
+            "type": "boolean",
+            "example": false,
+            "description": "偏远地区是否包邮"
+          },
+          "status": {
+            "example": "on_sale",
+            "$ref": "#/components/schemas/GoodsStatus"
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "1"
+          },
+          "categoryName": {
+            "type": "string",
+            "example": "周边"
+          },
+          "starIds": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stars": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StarBriefVo"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "coverUrl",
+          "price",
+          "stock",
+          "soldCount",
+          "showSoldCount",
+          "isFreeShipping",
+          "isRemoteFreeShipping",
+          "status",
+          "categoryId",
+          "categoryName",
+          "starIds",
+          "stars",
+          "createdAt"
+        ]
+      },
+      "GoodsListResponseVo": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GoodsSummaryVo"
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "number"
+              },
+              "page": {
+                "type": "number"
+              },
+              "pageSize": {
+                "type": "number"
+              },
+              "totalPages": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "required": [
+          "audience",
+          "items",
+          "pagination"
+        ]
+      },
+      "GoodsSpecVo": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "尺寸"
+          },
+          "options": {
+            "example": [
+              "S",
+              "M",
+              "L"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "options"
+        ]
+      },
+      "ServiceGuaranteeVo": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "example": "发货时效"
+          },
+          "value": {
+            "type": "string",
+            "example": "承诺下单后3天内发货"
+          }
+        },
+        "required": [
+          "label",
+          "value"
+        ]
+      },
+      "QuestionnaireSummaryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "title": {
+            "type": "string",
+            "example": "用户满意度调查"
+          },
+          "description": {
+            "type": "string",
+            "example": "感谢您参与本次调查",
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean",
+            "example": true
+          },
+          "submissionCount": {
+            "type": "number",
+            "example": 25
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "enabled",
+          "submissionCount",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "GoodsDetailVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "title": {
+            "type": "string",
+            "example": "五月天限定 T恤"
+          },
+          "coverUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/goods/cover.png"
+          },
+          "price": {
+            "type": "number",
+            "example": 199
+          },
+          "stock": {
+            "type": "number",
+            "example": 100
+          },
+          "soldCount": {
+            "type": "number",
+            "example": 50
+          },
+          "showSoldCount": {
+            "type": "boolean",
+            "example": true,
+            "description": "是否显示销量"
+          },
+          "isFreeShipping": {
+            "type": "boolean",
+            "example": false,
+            "description": "是否包邮"
+          },
+          "isRemoteFreeShipping": {
+            "type": "boolean",
+            "example": false,
+            "description": "偏远地区是否包邮"
+          },
+          "status": {
+            "example": "on_sale",
+            "$ref": "#/components/schemas/GoodsStatus"
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "1"
+          },
+          "categoryName": {
+            "type": "string",
+            "example": "周边"
+          },
+          "starIds": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stars": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StarBriefVo"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          },
+          "description": {
+            "type": "string",
+            "example": "商品详细描述...",
+            "nullable": true
+          },
+          "specs": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GoodsSpecVo"
+            }
+          },
+          "detailImages": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "descriptionImages": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "serviceGuarantees": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceGuaranteeVo"
+            }
+          },
+          "deliveryDays": {
+            "type": "number",
+            "example": 3,
+            "description": "发货时效（天），0 表示未设置"
+          },
+          "supportSevenDayReturn": {
+            "type": "boolean",
+            "example": true
+          },
+          "supportFastRefund": {
+            "type": "boolean",
+            "example": false
+          },
+          "supportLateDeliveryCompensation": {
+            "type": "boolean",
+            "example": false
+          },
+          "questionnaireId": {
+            "type": "string",
+            "example": "1",
+            "nullable": true
+          },
+          "questionnaire": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/QuestionnaireSummaryVo"
+              }
+            ]
+          },
+          "questionnaireSubmitRule": {
+            "type": "string",
+            "enum": [
+              "once",
+              "every_order"
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "coverUrl",
+          "price",
+          "stock",
+          "soldCount",
+          "showSoldCount",
+          "isFreeShipping",
+          "isRemoteFreeShipping",
+          "status",
+          "categoryId",
+          "categoryName",
+          "starIds",
+          "stars",
+          "createdAt",
+          "description",
+          "specs",
+          "detailImages",
+          "descriptionImages",
+          "serviceGuarantees",
+          "deliveryDays",
+          "supportSevenDayReturn",
+          "supportFastRefund",
+          "supportLateDeliveryCompensation"
+        ]
+      },
+      "GoodsCategoryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "周边"
+          },
+          "sortOrder": {
+            "type": "number",
+            "example": 0
+          },
+          "iconUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/icon.png"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "sortOrder",
+          "iconUrl",
+          "createdAt"
+        ]
+      },
+      "ReviewVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "goodsId": {
+            "type": "string",
+            "example": "10001"
+          },
+          "orderId": {
+            "type": "string",
+            "example": "20001",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "example": "30001"
+          },
+          "userName": {
+            "type": "string",
+            "example": "熊***头"
+          },
+          "userAvatar": {
+            "type": "string",
+            "example": "https://cdn.example.com/avatar.png",
+            "nullable": true
+          },
+          "content": {
+            "type": "string",
+            "example": "商品质量很好，物流也很快，非常满意！"
+          },
+          "rating": {
+            "type": "number",
+            "example": 5,
+            "minimum": 1,
+            "maximum": 5
+          },
+          "images": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "goodsId",
+          "orderId",
+          "userId",
+          "userName",
+          "userAvatar",
+          "content",
+          "rating",
+          "images",
+          "createdAt"
+        ]
+      },
+      "ReviewListResponseVo": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReviewVo"
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "number"
+              },
+              "page": {
+                "type": "number"
+              },
+              "pageSize": {
+                "type": "number"
+              },
+              "totalPages": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "required": [
+          "items",
+          "pagination"
+        ]
+      },
+      "StarSummaryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "name": {
+            "type": "string",
+            "example": "五月天"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/star/avatar.png"
+          },
+          "backgroundUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/star/bg.png",
+            "nullable": true
+          },
+          "tags": {
+            "example": [
+              "摇滚",
+              "乐队"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "followerCount": {
+            "type": "number",
+            "example": 1000000
+          },
+          "status": {
+            "example": "active",
+            "$ref": "#/components/schemas/StarStatus"
+          },
+          "fanClubEnabled": {
+            "type": "boolean",
+            "example": false
+          },
+          "isFollowing": {
+            "type": "boolean",
+            "example": false,
+            "description": "当前用户是否已关注，未登录时始终为 false"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "avatarUrl",
+          "backgroundUrl",
+          "tags",
+          "followerCount",
+          "status",
+          "fanClubEnabled",
+          "isFollowing",
+          "createdAt"
+        ]
+      },
+      "PaginationMeta": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "description": "总记录数"
+          },
+          "page": {
+            "type": "number",
+            "description": "当前页码"
+          },
+          "pageSize": {
+            "type": "number",
+            "description": "每页条数"
+          },
+          "totalPages": {
+            "type": "number",
+            "description": "总页数"
+          }
+        },
+        "required": [
+          "total",
+          "page",
+          "pageSize",
+          "totalPages"
+        ]
+      },
+      "StarListResponseVo": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StarSummaryVo"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/PaginationMeta"
+          }
+        },
+        "required": [
+          "audience",
+          "items",
+          "pagination"
+        ]
+      },
+      "GrandPrizeSummaryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "限定签名海报"
+          },
+          "coverUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/grand-prize/cover.png",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "coverUrl"
+        ]
+      },
+      "PityRuleVo": {
+        "type": "object",
+        "properties": {
+          "threshold": {
+            "type": "number",
+            "example": 30,
+            "description": "保底抽数"
+          },
+          "rarity": {
+            "type": "string",
+            "example": "SR",
+            "description": "保底等级代码"
+          }
+        },
+        "required": [
+          "threshold",
+          "rarity"
+        ]
+      },
+      "PoolStarSummaryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "William Jakrapatr"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/star/avatar.png",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "avatarUrl"
+        ]
+      },
+      "CardPoolSummaryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "name": {
+            "type": "string",
+            "example": "五月天限定卡池"
+          },
+          "description": {
+            "type": "string",
+            "example": "限定卡池描述",
+            "nullable": true
+          },
+          "coverUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/card-pool/cover.png"
+          },
+          "backgroundUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/card-pool/bg.png",
+            "nullable": true
+          },
+          "singleDrawBgUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/card-pool/single-draw.png",
+            "nullable": true,
+            "description": "单抽按钮背景图"
+          },
+          "multiDrawBgUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/card-pool/multi-draw.png",
+            "nullable": true,
+            "description": "连抽按钮背景图"
+          },
+          "cardTicketId": {
+            "type": "string",
+            "example": "1",
+            "nullable": true,
+            "description": "关联的抽卡券 ID"
+          },
+          "status": {
+            "example": "active",
+            "$ref": "#/components/schemas/CardPoolStatus"
+          },
+          "startTime": {
+            "type": "string",
+            "example": "2026-06-01T00:00:00.000Z",
+            "nullable": true
+          },
+          "endTime": {
+            "type": "string",
+            "example": "2026-06-30T23:59:59.000Z",
+            "nullable": true
+          },
+          "dailyDrawLimit": {
+            "type": "number",
+            "example": 10
+          },
+          "pityThreshold": {
+            "type": "number",
+            "example": 100
+          },
+          "sortOrder": {
+            "type": "number",
+            "example": 0
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "1",
+            "nullable": true
+          },
+          "allowSynthesis": {
+            "type": "boolean",
+            "example": false
+          },
+          "grandPrizes": {
+            "description": "关联的终极大奖列表",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrandPrizeSummaryVo"
+            }
+          },
+          "pityRules": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PityRuleVo"
+            }
+          },
+          "stars": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PoolStarSummaryVo"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          },
+          "participantCount": {
+            "type": "number",
+            "example": 1280
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "coverUrl",
+          "backgroundUrl",
+          "status",
+          "startTime",
+          "endTime",
+          "dailyDrawLimit",
+          "pityThreshold",
+          "sortOrder",
+          "categoryId",
+          "allowSynthesis",
+          "grandPrizes",
+          "pityRules",
+          "stars",
+          "createdAt",
+          "participantCount"
+        ]
+      },
+      "StarWithLatestEventVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "name": {
+            "type": "string",
+            "example": "五月天"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/star/avatar.png"
+          },
+          "backgroundUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/star/bg.png",
+            "nullable": true
+          },
+          "tags": {
+            "example": [
+              "摇滚",
+              "乐队"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "followerCount": {
+            "type": "number",
+            "example": 1000000
+          },
+          "status": {
+            "example": "active",
+            "$ref": "#/components/schemas/StarStatus"
+          },
+          "fanClubEnabled": {
+            "type": "boolean",
+            "example": false
+          },
+          "isFollowing": {
+            "type": "boolean",
+            "example": false,
+            "description": "当前用户是否已关注，未登录时始终为 false"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          },
+          "latestEvent": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/EventSummaryVo"
+              }
+            ]
+          },
+          "availablePools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardPoolSummaryVo"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "avatarUrl",
+          "backgroundUrl",
+          "tags",
+          "followerCount",
+          "status",
+          "fanClubEnabled",
+          "isFollowing",
+          "createdAt",
+          "latestEvent",
+          "availablePools"
+        ]
+      },
+      "StarWithEventListResponseVo": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StarWithLatestEventVo"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/PaginationMeta"
+          }
+        },
+        "required": [
+          "audience",
+          "items",
+          "pagination"
+        ]
+      },
+      "StarDetailVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "name": {
+            "type": "string",
+            "example": "五月天"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/star/avatar.png"
+          },
+          "backgroundUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/star/bg.png",
+            "nullable": true
+          },
+          "tags": {
+            "example": [
+              "摇滚",
+              "乐队"
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "followerCount": {
+            "type": "number",
+            "example": 1000000
+          },
+          "status": {
+            "example": "active",
+            "$ref": "#/components/schemas/StarStatus"
+          },
+          "fanClubEnabled": {
+            "type": "boolean",
+            "example": false
+          },
+          "isFollowing": {
+            "type": "boolean",
+            "example": false,
+            "description": "当前用户是否已关注，未登录时始终为 false"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          },
+          "bio": {
+            "type": "string",
+            "example": "华语乐坛知名摇滚乐队...",
+            "nullable": true
+          },
+          "fanClubMemberCount": {
+            "type": "number",
+            "example": 1280
+          },
+          "tipperCount": {
+            "type": "number",
+            "example": 5600
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "avatarUrl",
+          "backgroundUrl",
+          "tags",
+          "followerCount",
+          "status",
+          "fanClubEnabled",
+          "isFollowing",
+          "createdAt",
+          "bio",
+          "fanClubMemberCount",
+          "tipperCount"
+        ]
+      },
+      "CardPoolListResponseVo": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardPoolSummaryVo"
+            }
+          }
+        },
+        "required": [
+          "audience",
+          "items"
+        ]
+      },
+      "CardPoolCategoryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "限定卡池"
+          },
+          "description": {
+            "type": "string",
+            "example": "限时开放的限定卡池",
+            "nullable": true
+          },
+          "iconUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/category/icon.png",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "number",
+            "example": 0
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "iconUrl",
+          "sortOrder",
+          "createdAt"
+        ]
+      },
+      "CardPoolCategoryListResponseVo": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "admin"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardPoolCategoryVo"
+            }
+          },
+          "pagination": {
+            "description": "分页元数据",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaginationMeta"
+              }
+            ]
+          }
+        },
+        "required": [
+          "audience",
+          "items"
+        ]
+      },
+      "CardVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "poolId": {
+            "type": "string",
+            "example": "1",
+            "description": "卡片所属的卡池 ID"
+          },
+          "name": {
+            "type": "string",
+            "example": "阿信 SSR"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/card/image.png"
+          },
+          "rarity": {
+            "type": "string",
+            "example": "SSR"
+          },
+          "frameId": {
+            "type": "string",
+            "example": "1",
+            "nullable": true
+          },
+          "openingEffectId": {
+            "type": "string",
+            "example": "1",
+            "nullable": true,
+            "description": "关联的开卡特效 ID，为空表示该卡片无开卡特效"
+          },
+          "description": {
+            "type": "string",
+            "example": "阿信限定卡",
+            "nullable": true
+          },
+          "paddingTop": {
+            "type": "number",
+            "example": 0
+          },
+          "paddingRight": {
+            "type": "number",
+            "example": 0
+          },
+          "paddingBottom": {
+            "type": "number",
+            "example": 0
+          },
+          "paddingLeft": {
+            "type": "number",
+            "example": 0
+          },
+          "showInPreview": {
+            "type": "boolean",
+            "example": false,
+            "description": "为 true 的卡片会出现在抽卡页面的预览卡片中"
+          },
+          "hasPinyin": {
+            "type": "boolean",
+            "example": false,
+            "description": "为 true 表示该卡片包含拼音"
+          },
+          "hasVideo": {
+            "type": "boolean",
+            "example": false,
+            "description": "为 true 表示该卡片包含视频"
+          },
+          "hasAudio": {
+            "type": "boolean",
+            "example": false,
+            "description": "为 true 表示该卡片包含音频"
+          },
+          "videoUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "视频文件 URL"
+          },
+          "audioUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "音频文件 URL"
+          },
+          "frame": {
+            "type": "object",
+            "description": "边框详情，包含 id, name, imageUrl 等字段"
+          },
+          "openingEffect": {
+            "type": "object",
+            "description": "开卡特效详情，包含 id, name, fileUrl 等字段，为空表示该卡片无开卡特效"
+          },
+          "rarityConfig": {
+            "type": "object",
+            "description": "稀有度配置详情，包含 id, name, code, color 等字段"
+          }
+        },
+        "required": [
+          "id",
+          "poolId",
+          "name",
+          "imageUrl",
+          "rarity",
+          "frameId",
+          "openingEffectId",
+          "description",
+          "paddingTop",
+          "paddingRight",
+          "paddingBottom",
+          "paddingLeft",
+          "showInPreview",
+          "hasPinyin",
+          "hasVideo",
+          "hasAudio",
+          "videoUrl",
+          "audioUrl"
+        ]
+      },
+      "CardRarityConfigVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "普通"
+          },
+          "code": {
+            "type": "string",
+            "example": "N"
+          },
+          "color": {
+            "type": "string",
+            "example": "#94a3b8",
+            "nullable": true
+          },
+          "probabilityWeight": {
+            "type": "number",
+            "example": 50
+          },
+          "sortOrder": {
+            "type": "number",
+            "example": 1
+          },
+          "description": {
+            "type": "string",
+            "example": "最常见的卡片等级",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "code",
+          "color",
+          "probabilityWeight",
+          "sortOrder",
+          "description",
+          "createdAt"
+        ]
+      },
+      "CardSynthesisRuleVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "poolId": {
+            "type": "string",
+            "example": "10001"
+          },
+          "inputRarity": {
+            "type": "string",
+            "example": "N",
+            "description": "材料稀有度代码（对应 rarityConfigs.code）"
+          },
+          "inputCount": {
+            "type": "number",
+            "example": 3
+          },
+          "outputRarity": {
+            "type": "string",
+            "example": "R",
+            "description": "产物稀有度代码（对应 rarityConfigs.code，或特殊值如 GRAND_PRIZE）"
+          },
+          "description": {
+            "type": "string",
+            "example": "3 张 N 卡合成 1 张 R 卡",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "poolId",
+          "inputRarity",
+          "inputCount",
+          "outputRarity",
+          "description"
+        ]
+      },
+      "CardPoolDetailVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "name": {
+            "type": "string",
+            "example": "五月天限定卡池"
+          },
+          "description": {
+            "type": "string",
+            "example": "限定卡池描述",
+            "nullable": true
+          },
+          "coverUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/card-pool/cover.png"
+          },
+          "backgroundUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/card-pool/bg.png",
+            "nullable": true
+          },
+          "singleDrawBgUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/card-pool/single-draw.png",
+            "nullable": true,
+            "description": "单抽按钮背景图"
+          },
+          "multiDrawBgUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/card-pool/multi-draw.png",
+            "nullable": true,
+            "description": "连抽按钮背景图"
+          },
+          "cardTicketId": {
+            "type": "string",
+            "example": "1",
+            "nullable": true,
+            "description": "关联的抽卡券 ID"
+          },
+          "status": {
+            "example": "active",
+            "$ref": "#/components/schemas/CardPoolStatus"
+          },
+          "startTime": {
+            "type": "string",
+            "example": "2026-06-01T00:00:00.000Z",
+            "nullable": true
+          },
+          "endTime": {
+            "type": "string",
+            "example": "2026-06-30T23:59:59.000Z",
+            "nullable": true
+          },
+          "dailyDrawLimit": {
+            "type": "number",
+            "example": 10
+          },
+          "pityThreshold": {
+            "type": "number",
+            "example": 100
+          },
+          "sortOrder": {
+            "type": "number",
+            "example": 0
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "1",
+            "nullable": true
+          },
+          "allowSynthesis": {
+            "type": "boolean",
+            "example": false
+          },
+          "grandPrizes": {
+            "description": "关联的终极大奖列表",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrandPrizeSummaryVo"
+            }
+          },
+          "pityRules": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PityRuleVo"
+            }
+          },
+          "stars": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PoolStarSummaryVo"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          },
+          "participantCount": {
+            "type": "number",
+            "example": 1280
+          },
+          "cards": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardVo"
+            }
+          },
+          "rarityConfigs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardRarityConfigVo"
+            }
+          },
+          "synthesisRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardSynthesisRuleVo"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "coverUrl",
+          "backgroundUrl",
+          "status",
+          "startTime",
+          "endTime",
+          "dailyDrawLimit",
+          "pityThreshold",
+          "sortOrder",
+          "categoryId",
+          "allowSynthesis",
+          "grandPrizes",
+          "pityRules",
+          "stars",
+          "createdAt",
+          "participantCount",
+          "cards",
+          "rarityConfigs",
+          "synthesisRules"
+        ]
+      },
+      "CardPoolDetailResponseVo": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "pool": {
+            "$ref": "#/components/schemas/CardPoolDetailVo"
+          }
+        },
+        "required": [
+          "audience",
+          "pool"
+        ]
+      },
+      "DrawRecordMarqueeItemVo": {
+        "type": "object",
+        "properties": {
+          "userNickname": {
+            "type": "string",
+            "example": "用户昵称",
+            "nullable": true
+          },
+          "userAvatarUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/avatar.png",
+            "nullable": true
+          },
+          "cardName": {
+            "type": "string",
+            "example": "SSR·五月天"
+          }
+        },
+        "required": [
+          "userNickname",
+          "userAvatarUrl",
+          "cardName"
+        ]
+      },
+      "DrawRecordMarqueeResponseVo": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DrawRecordMarqueeItemVo"
+            }
+          }
+        },
+        "required": [
+          "audience",
+          "items"
+        ]
+      },
+      "RewardRecordDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "userId": {
+            "type": "string",
+            "example": "user_10001"
+          },
+          "userNickname": {
+            "type": "string",
+            "example": "五月天"
+          },
+          "starId": {
+            "type": "string",
+            "example": "10001"
+          },
+          "starName": {
+            "type": "string",
+            "example": "五月天"
+          },
+          "amount": {
+            "type": "number",
+            "example": 88
+          },
+          "message": {
+            "type": "string",
+            "example": "支持五月天！",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "userNickname",
+          "starId",
+          "starName",
+          "amount",
+          "message",
+          "createdAt"
+        ]
+      },
+      "RewardListResponseDto": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RewardRecordDto"
+            }
+          }
+        },
+        "required": [
+          "audience",
+          "items"
+        ]
+      },
+      "RewardRankItemDto": {
+        "type": "object",
+        "properties": {
+          "rank": {
+            "type": "number",
+            "example": 1
+          },
+          "userId": {
+            "type": "string",
+            "example": "user_10001"
+          },
+          "userNickname": {
+            "type": "string",
+            "example": "粉丝小明"
+          },
+          "totalAmount": {
+            "type": "number",
+            "example": 8888
+          }
+        },
+        "required": [
+          "rank",
+          "userId",
+          "userNickname",
+          "totalAmount"
+        ]
+      },
+      "RewardRankResponseDto": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RewardRankItemDto"
+            }
+          }
+        },
+        "required": [
+          "audience",
+          "items"
+        ]
+      },
+      "FanClubSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "10001"
+          },
+          "name": {
+            "type": "string",
+            "example": "五月天粉丝团"
+          },
+          "description": {
+            "type": "string",
+            "example": "五月天官方粉丝团",
+            "nullable": true
+          },
+          "avatarUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/fan-club/avatar.png"
+          },
+          "memberCount": {
+            "type": "number",
+            "example": 10000
+          },
+          "fanClubEnabled": {
+            "type": "boolean",
+            "example": true
+          },
+          "star": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StarBriefVo"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-05-26T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "avatarUrl",
+          "memberCount",
+          "fanClubEnabled",
+          "star",
+          "createdAt"
+        ]
+      },
+      "FanClubListResponseDto": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FanClubSummaryDto"
+            }
+          }
+        },
+        "required": [
+          "audience",
+          "items"
+        ]
+      },
+      "SearchResultDto": {
+        "type": "object",
+        "properties": {
+          "stars": {
+            "description": "明星搜索结果",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StarSummaryVo"
+            }
+          },
+          "events": {
+            "description": "活动搜索结果",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventSummaryVo"
+            }
+          },
+          "cardPools": {
+            "description": "卡池搜索结果",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardPoolSummaryVo"
+            }
+          }
+        },
+        "required": [
+          "stars",
+          "events",
+          "cardPools"
+        ]
+      },
+      "SearchResponseDto": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "result": {
+            "description": "搜索结果",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SearchResultDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "audience",
+          "result"
+        ]
+      },
+      "HotSearchItemDto": {
+        "type": "object",
+        "properties": {
+          "rank": {
+            "type": "number",
+            "example": 1,
+            "description": "排名"
+          },
+          "text": {
+            "type": "string",
+            "example": "夏日见面会",
+            "description": "搜索关键词"
+          },
+          "popularity": {
+            "type": "number",
+            "example": 1000,
+            "description": "热度值"
+          }
+        },
+        "required": [
+          "rank",
+          "text"
+        ]
+      },
+      "HotSearchResponseDto": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "description": "热门搜索列表",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HotSearchItemDto"
+            }
+          }
+        },
+        "required": [
+          "audience",
+          "items"
+        ]
+      },
+      "PaymentMethodSummaryVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "code": {
+            "type": "string",
+            "example": "wechat"
+          },
+          "name": {
+            "type": "string",
+            "example": "微信支付"
+          },
+          "icon": {
+            "type": "string",
+            "example": ""
+          },
+          "description": {
+            "type": "string",
+            "example": "推荐使用微信支付"
+          },
+          "enabled": {
+            "type": "boolean",
+            "example": true
+          },
+          "sortOrder": {
+            "type": "number",
+            "example": 0
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-06-08T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "name",
+          "icon",
+          "description",
+          "enabled",
+          "sortOrder",
+          "createdAt"
+        ]
+      },
+      "PaymentMethodListResponseVo": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentMethodSummaryVo"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "GiftEffectDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "animation"
+          },
+          "resource": {
+            "type": "string",
+            "example": "https://cdn.example.com/effects/heart.json"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "GiftTagVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "热门"
+          },
+          "textColor": {
+            "type": "string",
+            "example": "#FFFFFF"
+          },
+          "bgColor": {
+            "type": "string",
+            "example": "#FF49A4"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-07-29T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "textColor",
+          "bgColor",
+          "createdAt"
+        ]
+      },
+      "GiftDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "小心心"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://cdn.example.com/gift/heart.png"
+          },
+          "effect": {
+            "$ref": "#/components/schemas/GiftEffectDto"
+          },
+          "price": {
+            "type": "number",
+            "example": 9.9
+          },
+          "giftTag": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GiftTagVo"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2026-07-29T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "imageUrl",
+          "price",
+          "createdAt"
+        ]
+      },
+      "GiftListVo": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GiftDto"
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "example": {
+              "total": 50,
+              "page": 1,
+              "pageSize": 10,
+              "totalPages": 5
+            }
+          }
+        },
+        "required": [
+          "items",
+          "pagination"
+        ]
+      },
+      "RuleVo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "code": {
+            "type": "string",
+            "example": "fan_club_ranking"
+          },
+          "title": {
+            "type": "string",
+            "example": "粉丝团榜单规则"
+          },
+          "titleImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "content": {
+            "type": "string",
+            "example": "<p>规则内容...</p>"
+          },
+          "backgroundImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2026-07-31T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "title",
+          "titleImage",
+          "content",
+          "backgroundImage",
+          "updatedAt"
+        ]
+      },
+      "RuleListResponseVo": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "client",
+              "public"
+            ],
+            "example": "client"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RuleVo"
+            }
+          }
+        },
+        "required": [
+          "audience",
+          "items"
+        ]
+      },
+      "OrderStatus": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "paid",
+          "shipped",
+          "completed",
+          "cancelled",
+          "refunding",
+          "partial_refunding",
+          "partial_refunded"
+        ]
+      },
+      "OrderType": {
+        "type": "string",
+        "enum": [
+          "goods",
+          "ticket",
+          "card_ticket"
+        ]
+      },
+      "RefundStatus": {
+        "type": "string",
+        "enum": [
+          "none",
+          "applied",
+          "approved",
+          "rejected",
+          "refunded"
+        ]
+      },
+      "RefundApplicationStatus": {
+        "type": "string",
+        "enum": [
+          "pending_review",
+          "approved",
+          "return_shipped",
+          "refunding",
+          "refunded",
+          "rejected"
+        ]
+      },
+      "RefundType": {
+        "type": "string",
+        "enum": [
+          "goods",
+          "ticket"
+        ]
+      },
+      "GoodsStatus": {
+        "type": "string",
+        "enum": [
+          "on_sale",
+          "off_sale",
+          "sold_out"
+        ]
+      },
+      "EventStatus": {
+        "type": "string",
+        "enum": [
+          "selling",
+          "ended",
+          "cancelled"
+        ]
+      },
+      "SeatSelectionMode": {
+        "type": "string",
+        "enum": [
+          "manual",
+          "random"
+        ]
+      },
+      "TicketTierStatus": {
+        "type": "string",
+        "enum": [
+          "on_sale",
+          "sold_out",
+          "off_sale"
+        ]
+      },
+      "StarStatus": {
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive"
+        ]
+      },
+      "CardPoolStatus": {
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "ended"
+        ]
+      },
+      "UserStatus": {
+        "type": "number",
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "TaskType": {
+        "type": "string",
+        "enum": [
+          "daily",
+          "weekly",
+          "period"
+        ]
+      },
+      "TaskStatus": {
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive"
+        ]
+      },
+      "AuditEventType": {
+        "type": "string",
+        "enum": [
+          "login",
+          "logout",
+          "password_change",
+          "privacy_update",
+          "device_logout",
+          "sensitive_operation"
+        ]
+      },
+      "AuditEventResult": {
+        "type": "number",
+        "enum": [
+          1,
+          0
+        ]
+      },
+      "BannerStatus": {
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive"
+        ]
+      },
+      "BannerLinkType": {
+        "type": "string",
+        "enum": [
+          "star",
+          "event",
+          "goods",
+          "url"
+        ]
+      }
+    }
+  }
+}
