@@ -9,7 +9,7 @@
  */
 
 // NestJS 应用接口，用于操作已创建的应用实例
-import { INestApplication, Type } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 // Swagger 模块，用于生成和挂载 OpenAPI 文档
 import { SwaggerModule } from '@nestjs/swagger';
 // Swagger 文档构建配置、域配置列表及类型定义
@@ -36,7 +36,7 @@ function registerSwaggerDocument(app: INestApplication, domain: SwaggerDomainCon
     app,
     buildSwaggerDocumentConfig(domain),
     // include 选项限制仅扫描指定模块中的控制器，避免文档混杂
-    { include: domain.include as Array<Type<unknown>> },
+    { include: domain.include },
   );
 
   // 计算 Swagger JSON 文件的访问路径，格式为 "{route}-json"
