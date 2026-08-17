@@ -11,12 +11,10 @@ import { MemberLevelModule } from '../modules/member-level/member-level.module';
 import { ClientController } from './client.controller';
 import { ClientAuthController } from './client-auth.controller';
 import { ClientUserController } from './client-user.controller';
-import { ClientSecurityController } from './client-security.controller';
 import { ClientMemberController } from './client-member.controller';
 import { ClientMemberLevelController } from './client-member-level.controller';
 import { BannerModule } from '../modules/banner/banner.module';
 import { UserModule } from '../modules/user/user.module';
-import { SecurityModule } from '../modules/security/security.module';
 import { StorageModule } from '../modules/storage/storage.module';
 import { ClientStorageController } from './client-storage.controller';
 import { PaymentMethodModule } from '../modules/payment-method/payment-method.module';
@@ -32,7 +30,6 @@ import { ClientCourierCompanyController } from './client-courier-company.control
   imports: [
     AuthModule,
     UserModule,
-    SecurityModule,
     MemberModule,
     MemberLevelModule,
     BannerModule,
@@ -46,7 +43,6 @@ import { ClientCourierCompanyController } from './client-courier-company.control
     ClientController,
     ClientAuthController,
     ClientUserController,
-    ClientSecurityController,
     ClientMemberController,
     ClientMemberLevelController,
     ClientStorageController,

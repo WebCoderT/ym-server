@@ -1,6 +1,9 @@
 /**
- * @fileoverview 客户端安全控制器
+ * @fileoverview 客户端安全控制器（插件内置）
  * 提供客户端用户的设备管理和安全审计日志查询功能
+ *
+ * 原位于 src/client/client-security.controller.ts，
+ * 插件化后迁入安全模块内部，使插件自包含。
  */
 
 // 引入 NestJS 控制器相关装饰器
@@ -15,32 +18,32 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-// 引入访问级别装饰器，用于控制接口访问权限
-import { RequireAccessLevel } from '../access-level.decorator';
+// 引入访问级别装饰器，用于控制接口访问权限（模板公共 API）
+import { RequireAccessLevel } from '../../../access-level.decorator';
 
-// 引入访问级别枚举，定义不同角色的访问权限
-import { AccessLevel } from '../access-level.enum';
+// 引入访问级别枚举，定义不同角色的访问权限（模板公共 API）
+import { AccessLevel } from '../../../access-level.enum';
 
-// 引入权限装饰器
-import { RequirePermission } from '../permission.decorator';
-import { Permission } from '../permission.enum';
+// 引入权限装饰器（模板公共 API）
+import { RequirePermission } from '../../../permission.decorator';
+import { Permission } from '../../../permission.enum';
 
-// 引入当前认证信息装饰器，用于获取当前登录用户信息
-import { CurrentAuth } from '../current-auth.decorator';
+// 引入当前认证信息装饰器，用于获取当前登录用户信息（模板公共 API）
+import { CurrentAuth } from '../../../current-auth.decorator';
 
-// 引入认证令牌载荷类型，定义 JWT 令牌的数据结构
-import type { AuthTokenPayload } from '../auth-token';
+// 引入认证令牌载荷类型，定义 JWT 令牌的数据结构（模板公共 API）
+import type { AuthTokenPayload } from '../../../auth-token';
 
 // 引入安全服务，处理设备管理和安全审计相关业务逻辑
-import { SecurityService } from '../modules/security/security.service';
+import { SecurityService } from '../security.service';
 
 // 引入安全相关的 DTO，定义设备管理和审计日志的数据结构
-import { LogoutDeviceRequestDto } from '../modules/security/dto/security.dto';
+import { LogoutDeviceRequestDto } from '../dto/security.dto';
 import {
   LogoutDeviceResponseVo,
   SecurityAuditLogListResponseVo,
   UserDeviceListResponseVo,
-} from '../modules/security/vo/security.vo';
+} from '../vo/security.vo';
 
 /**
  * 客户端安全控制器

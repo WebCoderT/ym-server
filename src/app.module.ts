@@ -54,6 +54,10 @@ import { PermissionGuard } from './permission.guard';
 // 活跃账户守卫，冻结用户禁止访问资金相关接口
 import { ActiveAccountGuard } from './active-account.guard';
 import { NotificationModule } from './modules/notification/notification.module';
+// 插件系统：全局加载所有已安装插件
+import { PluginModule } from './common/plugin/plugin.module';
+// 已安装插件的类型安全导入（CLI 安装插件时自动维护）
+import { SecurityModule } from './modules/security/security.module';
 
 /**
  * AppModule 使用 @Module 装饰器声明为 NestJS 根模块
@@ -106,6 +110,11 @@ import { NotificationModule } from './modules/notification/notification.module';
         index: false,
       },
     }),
+
+    // 插件系统（全局加载所有已安装插件的 entities/controllers/services）
+    PluginModule.forRoot(),
+    // 已安装插件的类型安全导入（CLI 自动维护此列表）
+    SecurityModule.forRoot(),
 
     // 用户模块，提供用户相关服务与控制器
     UserModule,

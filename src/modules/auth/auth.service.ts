@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
+import { ForbiddenException, Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import jwt from 'jsonwebtoken';
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from 'node:crypto';
 import { AccessLevel } from '../../access-level.enum';
@@ -21,7 +21,8 @@ import {
 import { RefreshTokenStore } from './refresh-token.store';
 import { UserService } from '../user/user.service';
 import { UserStatus } from '../user/enums/user.enum';
-import { SecurityService } from '../security/security.service';
+import type { SecurityService } from '../security/security.service';
+import { SECURITY_SERVICE } from '../security/security.constants';
 import { UserInfoVo as UserInfoDto } from '../user/vo/user.vo';
 import { AuthSessionVo as AuthSessionDto } from './vo/auth.vo';
 import { WechatService } from './wechat.service';
@@ -59,8 +60,10 @@ export class AuthService {
     private readonly userService: UserService,
     /** 刷新令牌存储：管理 refreshToken 的生命周期 */
     private readonly refreshTokenStore: RefreshTokenStore,
-    /** 安全服务：用于记录登录设备信息 */
-    private readonly securityService: SecurityService,
+    /** 安全服务：用于记录登录设备信息（可选，插件卸载时静默降级） */
+    @Optional()
+    @Inject(SECURITY_SERVICE)
+    private readonly securityService: SecurityService | undefined,
     /** 微信服务：用于调用微信 code2Session 等 API */
     private readonly wechatService: WechatService,
     /** 系统配置服务：用于读取强制绑定手机号等全局开关 */
@@ -94,8 +97,8 @@ export class AuthService {
       throw new ForbiddenException(AUTH_MESSAGES.ACCOUNT_BANNED);
     }
 
-    // 将当前设备加入用户登录设备列表
-    await this.securityService.addDevice(user.id, {
+    // 将当前设备加入用户登录设备列表（插件未安装时静默跳过）
+    await this.securityService?.addDevice(user.id, {
       deviceId: input.deviceId ?? 'wechat-miniapp',
       deviceName: input.deviceName ?? '微信小程序',
       loginIp: null,
@@ -314,8 +317,8 @@ export class AuthService {
       throw new ForbiddenException(AUTH_MESSAGES.ACCOUNT_BANNED);
     }
 
-    // 将当前设备加入用户登录设备列表
-    await this.securityService.addDevice(user.id, {
+    // 将当前设备加入用户登录设备列表（插件未安装时静默跳过）
+    await this.securityService?.addDevice(user.id, {
       deviceId: input.deviceId ?? 'phone-app',
       deviceName: input.deviceName ?? '手机号登录',
       loginIp: null,
@@ -506,8 +509,8 @@ export class AuthService {
       throw new ForbiddenException(AUTH_MESSAGES.ACCOUNT_BANNED);
     }
 
-    // 记录设备
-    await this.securityService.addDevice(user.id, {
+    // 记录设备（插件未安装时静默跳过）
+    await this.securityService?.addDevice(user.id, {
       deviceId: input.deviceId ?? 'code-login',
       deviceName: input.deviceName ?? '验证码登录',
       loginIp: null,

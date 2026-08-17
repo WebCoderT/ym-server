@@ -1,6 +1,5 @@
 import { Global, Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SecurityModule } from '../security/security.module';
 import { StorageModule } from '../storage/storage.module';
 import { SystemConfigModule } from '../system-config/system-config.module';
 import { RoleModule } from '../role/role.module';
@@ -21,7 +20,6 @@ import { MemberLevelModule } from '@modules/member-level/member-level.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity, UserPrivacySettingEntity]),
-    SecurityModule,
     StorageModule,
     SystemConfigModule,
     RoleModule,

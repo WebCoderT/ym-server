@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
@@ -86,15 +82,11 @@ export class SecurityService {
     }
 
     // 判断待注销设备是否为当前正在使用的设备
-    const isCurrentDevice = currentDeviceId
-      ? deviceId === currentDeviceId
-      : device.isCurrent === 1;
+    const isCurrentDevice = currentDeviceId ? deviceId === currentDeviceId : device.isCurrent === 1;
 
     // 禁止注销当前设备，防止误操作导致自身被踢出
     if (isCurrentDevice) {
-      throw new BadRequestException(
-        SECURITY_MESSAGES.CANNOT_LOGOUT_CURRENT_DEVICE,
-      );
+      throw new BadRequestException(SECURITY_MESSAGES.CANNOT_LOGOUT_CURRENT_DEVICE);
     }
 
     // 从数据库中移除该设备记录
@@ -180,9 +172,7 @@ export class SecurityService {
    * @param userId - 用户唯一标识
    * @returns 审计日志列表响应 DTO
    */
-  async getAuditLogs(
-    userId: string,
-  ): Promise<SecurityAuditLogListResponseDto> {
+  async getAuditLogs(userId: string): Promise<SecurityAuditLogListResponseDto> {
     const logs = await this.auditRepo.find({
       where: { userId },
       order: { createdAt: 'DESC' },
@@ -231,10 +221,7 @@ export class SecurityService {
    * @param currentDeviceId - 当前设备标识（可选）
    * @returns 用户设备 DTO
    */
-  private toDeviceDto(
-    device: UserLoginDeviceEntity,
-    currentDeviceId?: string,
-  ): UserDeviceDto {
+  private toDeviceDto(device: UserLoginDeviceEntity, currentDeviceId?: string): UserDeviceDto {
     return {
       id: device.id,
       deviceId: device.deviceId,
@@ -242,9 +229,7 @@ export class SecurityService {
       loginIp: device.loginIp,
       loginCity: device.loginCity,
       // 若传入了 currentDeviceId 则直接比对，否则使用数据库中的 isCurrent 字段
-      current: currentDeviceId
-        ? device.deviceId === currentDeviceId
-        : device.isCurrent === 1,
+      current: currentDeviceId ? device.deviceId === currentDeviceId : device.isCurrent === 1,
       lastLoginAt: device.lastLoginAt.toISOString(),
     };
   }

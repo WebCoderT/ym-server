@@ -1,0 +1,16 @@
+{
+  "name": "security",
+  "version": "1.0.0",
+  "description": "用户登录设备管理与安全审计日志",
+  "author": "ym-server",
+  "mainModule": "SecurityModule",
+  "entities": ["UserLoginDeviceEntity", "SecurityAuditLogEntity"],
+  "templateApis": [
+    "../../access-level.decorator",
+    "../../access-level.enum",
+    "../../permission.decorator",
+    "../../permission.enum",
+    "../../current-auth.decorator",
+    "../../auth-token"
+  ]
+}

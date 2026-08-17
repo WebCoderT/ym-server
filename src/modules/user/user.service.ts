@@ -1,7 +1,8 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Inject, Injectable, NotFoundException, Optional } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { SecurityService } from '../security/security.service';
+import type { SecurityService } from '../security/security.service';
+import { SECURITY_SERVICE } from '../security/security.constants';
 import { StorageConfigService } from '../storage/storage-config.service';
 import { SystemConfigService } from '../system-config/system-config.service';
 import { RoleService } from '../role/role.service';
@@ -75,8 +76,10 @@ export class UserService {
     /** 隐私设置实体仓储：用于操作用户隐私设置表 */
     @InjectRepository(UserPrivacySettingEntity)
     private readonly privacyRepo: Repository<UserPrivacySettingEntity>,
-    /** 安全服务：用于记录登录设备 */
-    private readonly securityService: SecurityService,
+    /** 安全服务：用于记录登录设备（可选，插件卸载时静默降级） */
+    @Optional()
+    @Inject(SECURITY_SERVICE)
+    private readonly securityService: SecurityService | undefined,
     /** 存储配置服务：用于拼接文件资源的完整 URL */
     private readonly storageConfig: StorageConfigService,
     /** 系统配置服务：用于读取默认昵称/头像 */
@@ -144,9 +147,9 @@ export class UserService {
       await this.userRepo.save(user);
     }
 
-    // 若提供了设备信息，则记录到安全服务
+    // 若提供了设备信息，则记录到安全服务（插件未安装时静默跳过）
     if (input.deviceId) {
-      await this.securityService.addDevice(user.id, {
+      await this.securityService?.addDevice(user.id, {
         deviceId: input.deviceId,
         deviceName: input.deviceName || '微信小程序',
         loginIp: null,
@@ -234,9 +237,9 @@ export class UserService {
     });
     await this.privacyRepo.save(privacy);
 
-    // 若提供了设备信息，则记录到安全服务
+    // 若提供了设备信息，则记录到安全服务（插件未安装时静默跳过）
     if (input.deviceId) {
-      await this.securityService.addDevice(user.id, {
+      await this.securityService?.addDevice(user.id, {
         deviceId: input.deviceId,
         deviceName: input.deviceName || '手机号注册',
         loginIp: null,
@@ -285,7 +288,7 @@ export class UserService {
     const [userRoles, deviceList, memberLevelRes] =
       await Promise.all([
         this.roleService.getUserRoles(userId),
-        this.securityService.getDeviceList(userId),
+        this.securityService?.getDeviceList(userId) ?? Promise.resolve({ items: [] }),
         this.memberLevelService.getUserLevel(userId),
       ]);
 

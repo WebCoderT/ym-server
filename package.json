@@ -19,7 +19,11 @@
     "test:debug": "dotenv -e .env.test -- node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json",
     "openapi:export": "ts-node -r tsconfig-paths/register scripts/export-openapi.ts",
-    "openapi:check": "node -e \"const fs=require('node:fs'); const path=require('node:path'); ['client-openapi.json','admin-openapi.json','public-openapi.json'].forEach((file)=>{ const target=path.resolve(process.cwd(),'openapi',file); if(!fs.existsSync(target)){ throw new Error('Missing OpenAPI artifact: '+file); }}); console.log('OpenAPI artifacts present');\""
+    "openapi:check": "node -e \"const fs=require('node:fs'); const path=require('node:path'); ['client-openapi.json','admin-openapi.json','public-openapi.json'].forEach((file)=>{ const target=path.resolve(process.cwd(),'openapi',file); if(!fs.existsSync(target)){ throw new Error('Missing OpenAPI artifact: '+file); }}); console.log('OpenAPI artifacts present');\"",
+    "plugin:install": "ts-node -r tsconfig-paths/register scripts/plugin-install.ts",
+    "plugin:list": "ts-node -r tsconfig-paths/register scripts/plugin-list.ts",
+    "plugin:remove": "ts-node -r tsconfig-paths/register scripts/plugin-remove.ts",
+    "plugin:build": "ts-node -r tsconfig-paths/register scripts/plugin-build.ts"
   },
   "dependencies": {
     "@nestjs/bull": "^11.0.1",
