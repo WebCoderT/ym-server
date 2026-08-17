@@ -8,7 +8,7 @@
 
 export { SecurityModule } from './security.module';
 export { SecurityService } from './security.service';
-export { SECURITY_SERVICE } from './security.constants';
+export { SecurityEventListener } from './security-event.listener';
 export {
   AuditEventType,
   AuditEventResult,

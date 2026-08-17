@@ -56,8 +56,10 @@ import { ActiveAccountGuard } from './active-account.guard';
 import { NotificationModule } from './modules/notification/notification.module';
 // 插件系统：全局加载所有已安装插件
 import { PluginModule } from './common/plugin/plugin.module';
-// 已安装插件的类型安全导入（CLI 安装插件时自动维护）
-import { SecurityModule } from './modules/security/security.module';
+// 事件总线：核心模块发布领域事件，插件订阅处理
+import { EventsModule } from './common/events/events.module';
+// 能力注册中心：插件注册查询能力，核心模块按需调用
+import { CapabilityModule } from './common/plugin/capability.module';
 
 /**
  * AppModule 使用 @Module 装饰器声明为 NestJS 根模块
@@ -111,10 +113,12 @@ import { SecurityModule } from './modules/security/security.module';
       },
     }),
 
-    // 插件系统（全局加载所有已安装插件的 entities/controllers/services）
+    // 事件总线（全局，核心模块通过 emit 发布领域事件）
+    EventsModule,
+    // 能力注册中心（全局，插件注册查询能力，核心模块通过 invoke 调用）
+    CapabilityModule,
+    // 插件系统（全局，自动扫描 src/modules/*/plugin.json 并加载所有插件）
     PluginModule.forRoot(),
-    // 已安装插件的类型安全导入（CLI 自动维护此列表）
-    SecurityModule.forRoot(),
 
     // 用户模块，提供用户相关服务与控制器
     UserModule,

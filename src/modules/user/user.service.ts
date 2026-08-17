@@ -1,8 +1,12 @@
-import { ForbiddenException, Inject, Injectable, NotFoundException, Optional } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import type { SecurityService } from '../security/security.service';
-import { SECURITY_SERVICE } from '../security/security.constants';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { CapabilityRegistry } from '../../common/plugin/capability.registry';
+import {
+  USER_REGISTERED,
+  USER_LOGGED_IN,
+} from '../../common/events/domain-events';
 import { StorageConfigService } from '../storage/storage-config.service';
 import { SystemConfigService } from '../system-config/system-config.service';
 import { RoleService } from '../role/role.service';
@@ -76,10 +80,10 @@ export class UserService {
     /** 隐私设置实体仓储：用于操作用户隐私设置表 */
     @InjectRepository(UserPrivacySettingEntity)
     private readonly privacyRepo: Repository<UserPrivacySettingEntity>,
-    /** 安全服务：用于记录登录设备（可选，插件卸载时静默降级） */
-    @Optional()
-    @Inject(SECURITY_SERVICE)
-    private readonly securityService: SecurityService | undefined,
+    /** 事件总线：用于发布领域事件（插件通过订阅事件响应） */
+    private readonly eventBus: EventEmitter2,
+    /** 能力注册中心：用于查询插件注册的查询能力 */
+    private readonly capabilityRegistry: CapabilityRegistry,
     /** 存储配置服务：用于拼接文件资源的完整 URL */
     private readonly storageConfig: StorageConfigService,
     /** 系统配置服务：用于读取默认昵称/头像 */
@@ -147,14 +151,13 @@ export class UserService {
       await this.userRepo.save(user);
     }
 
-    // 若提供了设备信息，则记录到安全服务（插件未安装时静默跳过）
+    // 若提供了设备信息，发布用户注册事件（安全插件订阅后自动记录设备）
     if (input.deviceId) {
-      await this.securityService?.addDevice(user.id, {
+      this.eventBus.emit(USER_REGISTERED, {
+        userId: user.id,
+        openid: input.openid,
         deviceId: input.deviceId,
         deviceName: input.deviceName || '微信小程序',
-        loginIp: null,
-        loginCity: null,
-        isCurrent: 1,
       });
     }
 
@@ -237,14 +240,13 @@ export class UserService {
     });
     await this.privacyRepo.save(privacy);
 
-    // 若提供了设备信息，则记录到安全服务（插件未安装时静默跳过）
+    // 若提供了设备信息，发布用户注册事件（安全插件订阅后自动记录设备）
     if (input.deviceId) {
-      await this.securityService?.addDevice(user.id, {
+      this.eventBus.emit(USER_REGISTERED, {
+        userId: user.id,
+        phone: input.phone,
         deviceId: input.deviceId,
         deviceName: input.deviceName || '手机号注册',
-        loginIp: null,
-        loginCity: null,
-        isCurrent: 1,
       });
     }
 
@@ -288,7 +290,10 @@ export class UserService {
     const [userRoles, deviceList, memberLevelRes] =
       await Promise.all([
         this.roleService.getUserRoles(userId),
-        this.securityService?.getDeviceList(userId) ?? Promise.resolve({ items: [] }),
+        // 通过能力注册中心查询安全插件的设备列表能力（插件未安装时返回 null，降级为空列表）
+        this.capabilityRegistry
+          .invoke<{ userId: string }, { items: any[] }>('security:devices', { userId })
+          .then((result) => result ?? { items: [] }),
         this.memberLevelService.getUserLevel(userId),
       ]);
 

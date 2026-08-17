@@ -12,5 +12,7 @@
     "../../permission.enum",
     "../../current-auth.decorator",
     "../../auth-token"
-  ]
+  ],
+  "eventListeners": ["user.registered", "user.loggedIn"],
+  "capabilities": ["security:devices"]
 }
